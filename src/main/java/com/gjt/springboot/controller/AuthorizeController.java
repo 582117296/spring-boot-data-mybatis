@@ -8,6 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpSession;
+
 @Controller
 public class AuthorizeController {
     @Autowired
@@ -17,7 +19,8 @@ public class AuthorizeController {
 
     @GetMapping("/callback")
     public String callback(@RequestParam(name = "code") String code,
-                           @RequestParam(name = "state") String state){
+                           @RequestParam(name = "state") String state,
+                           HttpSession session){
         //AccessTokenVo accessTokenVo = new AccessTokenVo();
         accessTokenVo.setCode(code);
         //accessTokenVo.setClient_id("f4684bceff87cd6e648a");
@@ -28,7 +31,14 @@ public class AuthorizeController {
         String accessToken = gitHubSupplier.getAccessToken(accessTokenVo);
         GitHubUser user = gitHubSupplier.getUser(accessToken);
         System.out.println(user.getName());
-        return "index";
+        if (user != null){
+            //登录成功
+            session.setAttribute("user", user);
+            return "redirect:/";
+        }else {
+            //登录失败
+            return "redirect:/";
+        }
     }
 
 

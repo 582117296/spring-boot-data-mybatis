@@ -8,7 +8,7 @@ public class DepartmentController {
 
     @GetMapping("/")
     public String getGreeting(){
-        return  "index";
+        return "index";
     }
 
 }
