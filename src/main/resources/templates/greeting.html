@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link  rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}">
+    <link  rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap-theme.css}">
+    <title>水手博客</title>
+
+</head>
+<body>
+
+<h1>你好，世界！</h1>
+<div class="container" style="width: 300px">
+
+    <form class="form-signin" th:href="@{/greeting}" method="post">
+        <h2 class="form-signin-heading"><trans oldtip="Please sign in" newtip="请签到">Please sign in</trans></h2>
+        <label for="inputEmail" class="sr-only"><trans oldtip="Email address" newtip="电子邮件地址">Email address</trans></label>
+        <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="">
+        <label for="inputPassword" class="sr-only"><trans oldtip="Password" newtip="密码">Password</trans></label>
+        <input type="password" id="inputPassword" class="form-control" placeholder="Password" required="">
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" value="remember-me"><trans oldtip=" Remember me " newtip="记住我"> Remember me </trans></label>
+        </div>
+        <button class="btn btn-lg btn-primary btn-block" type="submit"><trans oldtip="Sign in" newtip="登录">Sign in</trans></button>
+    </form>
+
+</div>
+<nav aria-label="Page navigation">
+    10         <ul class="pagination">
+    11             <li>
+    12                 <a href="#" aria-label="Previous">
+    13                     <span aria-hidden="true">&laquo;</span>
+    14                 </a>
+    15             </li>
+    16             <li><a href="#">1</a></li>
+    17             <li><a href="#">2</a></li>
+    18             <li><a href="#">3</a></li>
+    19             <li><a href="#">4</a></li>
+    20             <li><a href="#">5</a></li>
+    21             <li>
+    22                 <a href="#" aria-label="Next">
+    23                     <span aria-hidden="true">&raquo;</span>
+    24                 </a>
+    25             </li>
+    26         </ul>
+    27     </nav>
+
+<script th:src="@{/webjars/jquery/1.11.1/jquery.js}"></script>
+<script th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.js}" type="application/javascript"></script>
+</body>
+
+</html>
