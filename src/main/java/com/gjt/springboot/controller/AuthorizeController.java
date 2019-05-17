@@ -39,19 +39,29 @@ public class AuthorizeController {
         //System.out.println(user.getName());
         if (gitHubUser != null){
             //登录成功
-            User user = new User();
-            user.setName(gitHubUser.getName());
-            user.setToken(UUID.randomUUID().toString());
-            user.setAccount_Id(String.valueOf(gitHubUser.getId()));
-            user.setGmt_create(System.currentTimeMillis());
-            user.setGmt_modified(user.getGmt_create());
-            int addUser = userMapper.addUser(user);
-            if (addUser>0){
-                session.setAttribute("user", gitHubUser);
+            //先查询数据库中是否有该用户
+            User userList = userMapper.findAccountId(String.valueOf(gitHubUser.getId()));
+            //如果没有
+            if (userList==null){//设置并写入用户
+                User user = new User();
+                user.setName(gitHubUser.getName());
+                user.setToken(UUID.randomUUID().toString());
+                user.setAccount_Id(String.valueOf(gitHubUser.getId()));
+                user.setGmt_create(System.currentTimeMillis());
+                user.setGmt_modified(user.getGmt_create());
+                int addUser = userMapper.addUser(user);
+                if (addUser>0){
+                    session.setAttribute("user", gitHubUser);
+                    session.setAttribute("mags", null);
+                }
+            }else {//如果有,就放到session中
+                session.setAttribute("user", userList);
+                session.setAttribute("mags", null);
             }
             return "redirect:/";
         }else {
             //登录失败
+            session.setAttribute("mags", "登录失败,请尝试重新登录!");
             return "redirect:/";
         }
     }
