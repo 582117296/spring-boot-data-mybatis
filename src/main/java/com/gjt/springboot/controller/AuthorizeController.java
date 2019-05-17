@@ -48,8 +48,8 @@ public class AuthorizeController {
             int addUser = userMapper.addUser(user);
             if (addUser>0){
                 session.setAttribute("user", gitHubUser);
-                return "redirect:/";
             }
+            return "redirect:/";
         }else {
             //登录失败
             return "redirect:/";
