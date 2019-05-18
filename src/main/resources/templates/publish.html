@@ -1,0 +1,90 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link  rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}">
+    <link  rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap-theme.css}">
+    <script th:src="@{/webjars/jquery/1.11.1/jquery.js}"></script>
+    <script th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.js}" type="application/javascript"></script>
+    <title>发布-码力社区</title>
+<style>
+
+
+</style>
+</head>
+<body style="background:#ebebeb">
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/">码力社区</a>
+                </div>
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+                    <form class="navbar-form navbar-left">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="搜索问题">
+                        </div>
+                        <button type="submit" class="btn btn-default">码力一下</button>
+                    </form>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="https://github.com/login/oauth/authorize?client_id=f4684bceff87cd6e648a&redirect_uri=http://localhost:8080/callback&scope=user&state=1" th:if="${session.user==null}">登录我的码力</a></li>
+                        <li th:if="${session.mags!=null}" th:text="${session.mags}"></li>
+                        <li class="dropdown" th:if="${session.user!=null}">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" th:text="${session.user.getName()}+'的社区'">我的社区<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">消息中心</a></li>
+                                <li><a href="#">个人资料</a></li>
+                                <li><a href="#">退出码力</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div><!-- /.navbar-collapse -->
+            </div><!-- /.container-fluid -->
+        </nav>
+        <div class="container-fluid" style="margin:30px 80px 10px 80px;background: white">
+            <div class="row">
+                <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+
+                    <h2> <span class="glyphicon glyphicon-retweet" aria-hidden="true"></span>发起提问</h2>
+                    <hr>
+                    <form action="">
+                        <div class="form-group">
+                            <label for="title">问题标题:(简单扼要)</label>
+                            <input type="text" class="form-control" id="title" name="title" placeholder="问题标题">
+                        </div>
+                        <div class="form-group">
+                            <label for="title">问题补充(必填:请参考右侧提示)</label>
+                            <textarea class="form-control" id="description" name="description" cols="3" rows="10"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="title">添加标签:</label>
+                            <input type="text" class="form-control" id="tag" name="tag" placeholder="添加标签,以','号隔开">
+                        </div>
+                        <button type="submit" class="btn btn-success" style="float: right;margin-bottom: 10px">发布</button>
+                        <hr>
+                    </form>
+                </div>
+                <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12" >
+                    <h3>问题发起指南:</h3>
+                    <ul>
+                        <li>· 问题标题: 请用精简的语言描述您发布的问题,不要超过25字;</li>
+                        <li>· 问题补充: 请详细补充您的问题内容,并确保问题描述清晰直观,并提供一些相关的资料</li>
+                        <li>· 选择标签: 选择一个或多个合适的标签,用逗号隔开,每个标签不得超过10字</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+
+</body>
+</html>

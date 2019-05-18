@@ -31,7 +31,6 @@ public class DruidConfig {
         initParams.put("loginUsername", "admin");
         initParams.put("loginPassword", "123456");
         initParams.put("allow", "");
-
         bean.setInitParameters(initParams);
         return  bean;
     }
@@ -41,7 +40,7 @@ public class DruidConfig {
         FilterRegistrationBean bean = new FilterRegistrationBean();
         bean.setFilter(new WebStatFilter());
         Map<String,String> initParams=new HashMap<>();
-        initParams.put("exclusions", "*.js,*.css,/druid/*");
+        initParams.put("exclusions", "*.jpg,*.js,*.css,/druid/*");
         bean.setInitParameters(initParams);
         bean.setUrlPatterns(Arrays.asList("/*"));
         return  bean;
