@@ -38,7 +38,7 @@
                     </form>
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="https://github.com/login/oauth/authorize?client_id=f4684bceff87cd6e648a&redirect_uri=http://localhost:8080/callback&scope=user&state=1" th:if="${session.user==null}">登录我的码力</a></li>
-                        <li th:if="${session.mags!=null}" th:text="${session.mags}"></li>
+                        <li th:if="${session.msg!=null}" th:text="${session.msg}"></li>
                         <li class="dropdown" th:if="${session.user!=null}">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" th:text="${session.user.getName()}+'的社区'">我的社区<span class="caret"></span></a>
                             <ul class="dropdown-menu">
@@ -57,7 +57,7 @@
 
                     <h2> <span class="glyphicon glyphicon-retweet" aria-hidden="true"></span>发起提问</h2>
                     <hr>
-                    <form action="">
+                    <form action="/publish" method="post">
                         <div class="form-group">
                             <label for="title">问题标题:(简单扼要)</label>
                             <input type="text" class="form-control" id="title" name="title" placeholder="问题标题">
@@ -70,6 +70,8 @@
                             <label for="title">添加标签:</label>
                             <input type="text" class="form-control" id="tag" name="tag" placeholder="添加标签,以','号隔开">
                         </div>
+                        <input type="text" th:if="${session.error!=null}" th:text="${session.error}"/>
+                        <input type="text" th:if="${session.success!=null}" th:text="${session.success}"/>
                         <button type="submit" class="btn btn-success" style="float: right;margin-bottom: 10px">发布</button>
                         <hr>
                     </form>

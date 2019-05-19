@@ -10,24 +10,25 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
-public class DepartmentController {
+public class HomeController {
 
     @Autowired
     private UserMapper userMapper;
 
     @GetMapping("/")
     public String getGreeting(HttpServletRequest request){
-        Cookie[] cookies = request.getCookies();
-        User user=null;
-        for (Cookie cookie : cookies) {
-            if (cookie.equals("token")) {
-                String token = cookie.getValue();
-                user = userMapper.findToken(token);
-                break;
+        if (request.getCookies()!=null){
+            Cookie[] cookies = request.getCookies();
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("token")){
+                    String token = cookie.getValue();
+                    User user=userMapper.queryUserByToken(token);
+                    if (user!=null){
+                        request.getSession().setAttribute("user", user);
+                    }
+                    break;
+                }
             }
-        }
-        if (user!=null){
-            request.getSession().setAttribute("user", user);
         }
         return "index";
     }

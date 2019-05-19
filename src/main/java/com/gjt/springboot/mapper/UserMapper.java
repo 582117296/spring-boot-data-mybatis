@@ -13,10 +13,8 @@ public interface UserMapper {
     @Insert("insert into user (account_Id,name,token,gmt_create,gmt_modified) values (#{account_Id},#{name},#{token},#{gmt_create},#{gmt_modified})")
     int addUser(User user);
 
-    @Select("select * from user where token=#{token}")
-    User findToken(@Param("token") String token);
-
-
-    @Select("select * from user where account_Id=#{account_Id} limit 0,1")
-    User findAccountId(@Param("account_Id") String valueOf);
+    @Select("select * from user where token =#{record}")
+    User queryUserByToken(@Param("record") String token);
+    @Select("select * from user where account_Id =#{record}")
+    User queryUserByAccountId(@Param("record")String valueOf);
 }

@@ -10,7 +10,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.UUID;
 
 @Controller
@@ -26,7 +28,8 @@ public class AuthorizeController {
     @GetMapping("/callback")
     public String callback(@RequestParam(name = "code") String code,
                            @RequestParam(name = "state") String state,
-                           HttpSession session){
+                           HttpServletRequest request,
+                           HttpServletResponse response){
         //AccessTokenVo accessTokenVo = new AccessTokenVo();
         accessTokenVo.setCode(code);
         //accessTokenVo.setClient_id("f4684bceff87cd6e648a");
@@ -35,9 +38,9 @@ public class AuthorizeController {
         //accessTokenVo.setClient_secret("b8b3e5a9f4ee607778451c63115300d52dbf2250");
         System.out.println(accessTokenVo.toString());
         String accessToken = gitHubSupplier.getAccessToken(accessTokenVo);
-        GitHubUser gitHubUser = gitHubSupplier.getUser(accessToken);
+        GitHubUser user = gitHubSupplier.getUser(accessToken);
         //System.out.println(user.getName());
-        if (gitHubUser != null){
+        if (user != null){
             //登录成功
             //先查询数据库中是否有该用户
             User userList = userMapper.findAccountId(String.valueOf(gitHubUser.getId()));
@@ -54,10 +57,10 @@ public class AuthorizeController {
                     session.setAttribute("user", gitHubUser);
                     session.setAttribute("mags", null);
                 }
-            }else {//如果有,就放到session中
-                session.setAttribute("user", userList);
-                session.setAttribute("mags", null);
+                return "redirect:/";
             }
+            response.addCookie(new Cookie("token", presenceUser.getToken()));
+            request.getSession().setAttribute("user", presenceUser);
             return "redirect:/";
         }else {
             //登录失败
